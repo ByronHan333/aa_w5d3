@@ -1,39 +1,15 @@
 PRAGMA foreign_keys = ON;
 
+DROP TABLE question_likes
+DROP TABLE replies
+DROP TABLE question_follows
+DROP TABLE questions
+DROP TABLE users
+
 CREATE TABLE users (
   id INTEGER PRIMARY KEY,
   fname VARCHAR(255) NOT NULL,
   lname VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE questions (
-  id INTEGER PRIMARY KEY,
-  title VARCHAR(255) NOT NULL,
-  body TEXT NOT NULL,
-
-  FOREIGN KEY (author_id) REFERENCES users(id)
-);
-
-CREATE TABLE question_follows (
-  id INTEGER PRIMARY KEY,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (question_id) REFERENCES questions(id)
-);
-
-CREATE TABLE replies (
-  id INTEGER PRIMARY KEY,
-  body TEXT NOT NULL,
-
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (parent_id) REFERENCES replies(id),
-  FOREIGN KEY (question_id) REFERENCES questions(id)
-);
-
-CREATE TABLE question_likes (
-  id INTEGER PRIMARY KEY,
-
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (question_id) REFERENCES questions(id)
 );
 
 INSERT INTO
@@ -44,6 +20,15 @@ VALUES
   (3, 'Taylor', 'Muself'),
   (4, 'Rex', 'Kho');
 
+
+CREATE TABLE questions (
+  id INTEGER PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  body TEXT NOT NULL,
+
+  FOREIGN KEY (author_id) REFERENCES users(id)
+);
+
 INSERT INTO
     questions (id, title, body, author_id)
 VALUES
@@ -52,6 +37,12 @@ VALUES
     (3, 'Join', 'Can I come iceskating as well?', 3),
     (4, 'Flex', 'Do we have flex time today?', 2),
     (5, 'Other staff', 'Can other staff comee?', 3);
+
+CREATE TABLE question_follows (
+  id INTEGER PRIMARY KEY,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (question_id) REFERENCES questions(id)
+);
 
 INSERT INTO
     question_follows (id,user_id,question_id)
@@ -62,6 +53,16 @@ VALUES
     (1,2,3),
     (1,4,3);
 
+
+CREATE TABLE replies (
+  id INTEGER PRIMARY KEY,
+  body TEXT NOT NULL,
+
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (parent_id) REFERENCES replies(id),
+  FOREIGN KEY (question_id) REFERENCES questions(id)
+);
+
 INSERT INTO
     replies(id,body,user_id,parent_id,question_id)
 VALUES
@@ -70,6 +71,13 @@ VALUES
     (3,'No flex time today',3,NULL,4),
     (4,'Can we add a flex time?',1,3,4),
     (5, 'No flex time?',4,4,4);
+
+CREATE TABLE question_likes (
+  id INTEGER PRIMARY KEY,
+
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (question_id) REFERENCES questions(id)
+);
 
 INSERT INTO
     question_likes(id,user_id,question_id)
