@@ -1,14 +1,58 @@
-require_relative 'questions_database'
+require_relative './questionsdb/question_follow'
+require_relative './questionsdb/model_base'
 
 
 
+# questions = QuestionFollow.followed_questions_for_user_id(1)
+# questions.each {|i| print "#{i.body}\n"}
 
 
 
+# questions = QuestionFollow.most_followed_questions(1)
+# # users = questions[0].followers
+# q1 = questions[0]
+# q2 = questions[1]
 
+# print "#{q.body}\n"
+# users.each {|i| print "#{i.fname}\n"}
 
+# r1 = Question.most_followed(1)[0]
+# r2 = Question.most_followed(1)[0]
 
+# print "#{r1.body}\n"
+# print "#{r2.body}\n"
 
+# users = QuestionLike.likers_for_question_id(4)
+# users.each {|u| puts u.fname}
+
+# qs = Question.most_liked(2)
+# qs.each {|u| puts u.body}
+
+# q = qs[0]
+# # p q.num_likes
+# l1 = q.likers[0]
+# p l1.liked_questions
+
+# users = User.find_by_id(2)
+# # p users[0]
+# p users[0].instance_variables
+# p users[0].instance_variable_get(:@id)
+
+# p :@id[1..-1]
+
+# h = Hash[users[0].instance_variables.map do |name|
+#   # print "#{name.to_s[1..-1]}, #{users.instance_variable_get(name)}\n"
+#   [name.to_s[1..-1], users[0].instance_variable_get(name)]
+# end]
+
+# p h
+
+def unpack_hash(hash)
+  x = *hash
+end
+h1 = {author_id: 2}
+h2 = {lname: "Oberyn", fname: "Martell"}
+p unpack_hash(h1)
 
 
 
