@@ -1,10 +1,10 @@
 PRAGMA foreign_keys = ON;
 
-DROP TABLE question_likes
-DROP TABLE replies
-DROP TABLE question_follows
-DROP TABLE questions
-DROP TABLE users
+DROP TABLE IF EXISTS question_likes;
+DROP TABLE IF EXISTS replies;
+DROP TABLE IF EXISTS question_follows;
+DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
   id INTEGER PRIMARY KEY,
@@ -25,6 +25,7 @@ CREATE TABLE questions (
   id INTEGER PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   body TEXT NOT NULL,
+  author_id INTEGER NOT NULL,
 
   FOREIGN KEY (author_id) REFERENCES users(id)
 );
@@ -40,23 +41,29 @@ VALUES
 
 CREATE TABLE question_follows (
   id INTEGER PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  question_id INTEGER NOT NULL,
+
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (question_id) REFERENCES questions(id)
 );
 
 INSERT INTO
-    question_follows (id,user_id,question_id)
+    question_follows (id, user_id, question_id)
 VALUES
     (1,1,1),
-    (1,1,2),
-    (1,1,3),
-    (1,2,3),
-    (1,4,3);
+    (2,1,2),
+    (3,1,3),
+    (4,2,3),
+    (5,4,3);
 
 
 CREATE TABLE replies (
   id INTEGER PRIMARY KEY,
   body TEXT NOT NULL,
+  user_id INTEGER NOT NULL,
+  parent_id INTEGER,
+  question_id INTEGER NOT NULL,
 
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (parent_id) REFERENCES replies(id),
@@ -74,6 +81,8 @@ VALUES
 
 CREATE TABLE question_likes (
   id INTEGER PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  question_id INTEGER NOT NULL,
 
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (question_id) REFERENCES questions(id)
