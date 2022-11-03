@@ -1,3 +1,6 @@
+# https://collinsmith.me/parameterization-with-sql-in-ruby/
+# https://blog.saeloun.com/2020/04/08/heredoc-in-ruby-and-rails.html
+
 require 'active_support/inflector'
 class ModelBase
 
@@ -39,12 +42,12 @@ class ModelBase
   end
 
   def where(hash)
-
+    where_query = hash.keys.
     data = QuestionsDBConnection.instance.execute(<<-SQL)
       SELECT *
       FROM #{self.table}
       WHERE id = ?
-      AND 
+      AND
     SQL
   end
 
@@ -67,4 +70,17 @@ class ModelBase
   def update
 
   end
+
+  data = QuestionsDatabase.get_first_row(<<-SQL, id: id)
+    SELECT
+      *
+    FROM
+      #{table}
+    WHERE
+      id = :id
+  SQL
+end
+
+def func(key: val)
+  print "#{:key}, #{val} \n"
 end

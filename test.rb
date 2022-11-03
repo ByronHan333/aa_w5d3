@@ -52,6 +52,7 @@ def unpack_hash(hash)
 end
 h1 = {author_id: 2}
 h2 = {lname: "Oberyn", fname: "Martell"}
+h1.join()
 p unpack_hash(h1)
 
 
